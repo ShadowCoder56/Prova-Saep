@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nova Tarefa</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Quadro Kanban</a> |
+      <a href="usuario.html">Novo Usuário</a> |
+      <a href="tarefa.html">Nova Tarefa</a>
+    </nav>
+
+    <div class="container">
+      <h1>Nova Tarefa</h1>
+      <form id="formTarefa">
+        <label>Responsável:</label>
+        <select id="id_usuario" required>
+          <option value="">Selecione um usuário...</option>
+        </select>
+
+        <textarea
+          id="descricao"
+          placeholder="Descrição da tarefa"
+          required
+        ></textarea>
+
+        <input
+          type="text"
+          id="setor"
+          placeholder="Setor (Ex: Limpeza, RH)"
+          required
+        />
+
+        <label>Prioridade:</label>
+        <select id="prioridade" required>
+          <option value="baixa">Baixa</option>
+          <option value="média">Média</option>
+          <option value="alta">Alta</option>
+        </select>
+
+        <label>Data:</label>
+        <input type="date" id="data_cadastro" required />
+
+        <button type="submit">Criar Tarefa</button>
+      </form>
+    </div>
+
+    <script>
+      window.onload = async () => {
+        const res = await fetch("/usuarios");
+        const usuarios = await res.json();
+        const select = document.getElementById("id_usuario");
+        usuarios.forEach((u) => {
+          select.innerHTML += `<option value="${u.id}">${u.nome}</option>`;
+        });
+      };
+
+      document.getElementById("formTarefa").onsubmit = async (e) => {
+        e.preventDefault();
+        const dados = {
+          id_usuario: document.getElementById("id_usuario").value,
+          descricao: document.getElementById("descricao").value,
+          setor: document.getElementById("setor").value,
+          prioridade: document.getElementById("prioridade").value,
+          data_cadastro: document.getElementById("data_cadastro").value,
+        };
+
+        const res = await fetch("/tarefas", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dados),
+        });
+
+        if (res.ok) {
+          alert("Tarefa criada!");
+          window.location.href = "index.html";
+        }
+      };
+    </script>
+  </body>
+</html>

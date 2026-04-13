@@ -1,0 +1,32 @@
+!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Gerenciador Kanban</title>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="usuario.html">Cadastrar Usuário</a>
+      <a href="tarefa.html">Nova Tarefa</a>
+    </nav>
+
+    <main class="kanban-container">
+      <div class="col" id="a-fazer">
+        <h2>A Fazer</h2>
+        <div class="cards"></div>
+      </div>
+      <div class="col" id="fazendo">
+        <h2>Fazendo</h2>
+        <div class="cards"></div>
+      </div>
+      <div class="col" id="pronto">
+        <h2>Pronto</h2>
+        <div class="cards"></div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

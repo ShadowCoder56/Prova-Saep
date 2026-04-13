@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cadastro de Usuário</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Quadro Kanban</a> |
+      <a href="usuario.html">Novo Usuário</a> |
+      <a href="tarefa.html">Nova Tarefa</a>
+    </nav>
+
+    <div class="container">
+      <h1>Cadastrar Usuário</h1>
+      <form id="formUsuario">
+        <input type="text" id="nome" placeholder="Nome Completo" required />
+        <input
+          type="email"
+          id="email"
+          placeholder="E-mail (ex@exemplo.com)"
+          required
+        />
+        <button type="submit">Salvar Usuário</button>
+      </form>
+      <p id="msg"></p>
+    </div>
+
+    <script>
+      document.getElementById("formUsuario").onsubmit = async (e) => {
+        e.preventDefault();
+        const nome = document.getElementById("nome").value;
+        const email = document.getElementById("email").value;
+
+        const res = await fetch("/usuarios", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nome, email }),
+        });
+
+        if (res.ok) {
+          alert(" Usuário cadastrado com sucesso!");
+          e.target.reset();
+        } else {
+          alert(" Erro ao cadastrar.");
+        }
+      };
+    </script>
+  </body>
+</html>
